@@ -11,9 +11,11 @@ module.exports = {
             viewportWidth: 750,     // (Number) The width of the viewport.
             unitPrecision: 3,       // (Number) The decimal numbers to allow the REM units to grow to.
             viewportUnit: 'vw',     // (String) Expected units.
-            selectorBlackList: ['.ignore', '.hairlines','mint-ui/lib/style.css'],  // (Array) The selectors to ignore and leave as px.
+            selectorBlackList: ['.ignore', '.hairlines'],  // (Array) The selectors to ignore and leave as px.
             minPixelValue: 1,       // (Number) Set the minimum pixel value to replace.
-            mediaQuery: false       // (Boolean) Allow px to be converted in media queries.
+            mediaQuery: false,       // (Boolean) Allow px to be converted in media queries.
+            exclude: /(\/|\\)(node_modules)(\/|\\)/
+
         }, 
         "postcss-viewport-units":{
             filterRule: rule => rule.selector.indexOf('::after') === -1

@@ -1,0 +1,76 @@
+$themeRed :#EC1C26;
+$themeWhite :#FFFFFF;
+$themeBlack :#333333;
+$themeGray :#666666;
+$themeLightGray :#999999;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #efeff5;
+}
+
+.themeGray{
+  color: $themeGray;
+}
+.themeBlack{
+  color: $themeBlack;
+}
+.foot-placeholder{
+  width: 750px;
+  height: 130px;
+}
+.mint-header {
+  background-color: $themeRed;
+}
+.mint-button:not(.is-disabled):active::after {
+    opacity: .2 /* .6 */
+}
+.mint-button--primary {
+    background-color: $themeRed;
+}
+.mint-button--primary.is-plain {
+    border: 1px solid $themeRed;
+    color: $themeRed
+}
+.mint-badge.is-primary {
+  background-color: $themeRed
+}
+.mint-switch-input:checked + .mint-switch-core {
+  border-color: $themeRed;
+  background-color: $themeRed;
+}
+.mint-navbar .mint-tab-item.is-selected {
+  border-bottom: 3px solid $themeRed;
+  color: $themeRed;
+}
+.mint-tabbar > .mint-tab-item.is-selected {
+  color: $themeRed;
+}
+.mint-searchbar-cancel {
+  color: $themeRed;
+}
+.mint-checkbox-input:checked + .mint-checkbox-core {
+  background-color: $themeRed;
+  border-color: $themeRed;
+}
+.mint-radio-input:checked + .mint-radio-core {
+  background-color: $themeRed;
+  border-color: $themeRed;
+}
+.mt-range-progress {
+  background-color: $themeRed;
+}
+.mt-progress-progress {
+  background-color: $themeRed;
+}
+.mint-msgbox-confirm {
+  color: $themeRed;
+}
+.mint-msgbox-confirm:active {
+  color: $themeRed;
+}
+.mint-datetime-action {
+  color: $themeRed;
+}

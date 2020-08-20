@@ -1,18 +1,53 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import { Tabbar, TabItem } from 'mint-ui'
-
-Vue.component(Tabbar.name, Tabbar)
-Vue.component(TabItem.name, TabItem)
+// import store from '@/store'
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'home',
+      component: () => import('@/pages/home/home'),
+      meta: { keepAlive: true }
+    },
+    {
+      path: '/mys',
+      name: 'mys',
+      component: () => import('@/pages/mys/mys'),
+      meta: { keepAlive: true },
+      children: [
+        {
+          path: '/bookDetail',
+          name: 'bookDetail',
+          component: () => import('@/pages/mys/bookDetail')
+
+        }
+      ]
+
+    },
+    {
+      path: '/recommend',
+      name: 'recommend',
+      component: () => import('@/pages/recommend/recommend'),
+      meta: { keepAlive: true }
+
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: () => import('@/pages/user/user'),
+      meta: { keepAlive: true }
+
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  console.log(to)
+  console.log(from)
+  // store.dispatch('setCurrentPage', 'mobile')
+
+  next()
+})
+export default router
