@@ -10,6 +10,7 @@
               <div class="search-title" :class="navStyle">书名/作者/播者/章节</div>
             </div>
         </div>
+        <div class="nav-place-view"></div>
             <!-- 顶部banner图下的带圆角的背景图 -->
         <div class="top-white-color-view">
         </div>
@@ -228,6 +229,11 @@ export default {
   color:rgba(255,255,255,1);
 
 }
+.nav-place-view{
+  width: 750px;
+  height: 112px;
+  position: relative;
+}
 .top-white-color-view{
   position: absolute;
   z-index: 0;
@@ -235,13 +241,13 @@ export default {
   border-radius: 25px 25px 0 0;
   width: 750px;
   height: 300px;
-  top:153px;
+  top:253px;
 }
 .swipe{
  width: 100%;
  height: 300px;
  position: relative;
- top:12px;
+ top:0;
 }
 .banner-image{
   margin-left: 25px;
@@ -253,7 +259,7 @@ export default {
 .cfylist{
     position: relative;
     background: white;
-    top: 12px;
+    top: 0;
 }
 .class-swiper{
   height: 270px;
@@ -293,7 +299,7 @@ export default {
 .dots {
     position: relative;
     background: #ffffff;
-    top: 12px;
+    top: 0;
     left: 0;
     width: 750px;
     height: 40px;

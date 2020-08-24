@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <i class="mint-toast-icon mintui mintui-more"></i>
+<i class="mint-toast-icon mintui mintui-more"></i>
 <i class="mint-toast-icon mintui mintui-back"></i>
 <i class="mint-toast-icon mintui mintui-search"></i>
 <i class="mint-toast-icon mintui mintui-field-error"></i>

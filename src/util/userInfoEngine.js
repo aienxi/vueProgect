@@ -14,7 +14,7 @@ function getUserInfo () {
   var userInfo = JSON.parse(localStorage.getItem('userInfo')) 
   if(!userInfo){
     userInfo ={
-      uid:'0',
+      uid:'22651',
       aid:'60',
       siteid:'70'
     }

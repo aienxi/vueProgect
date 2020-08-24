@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import store from '@/store'
+import store from '@/store'
 Vue.use(Router)
 
 const router = new Router({
@@ -44,10 +44,7 @@ const router = new Router({
   ]
 })
 router.beforeEach((to, from, next) => {
-  console.log(to)
-  console.log(from)
-  // store.dispatch('setCurrentPage', 'mobile')
-
+  store.dispatch('setCurrentPage', to.name)
   next()
 })
 export default router

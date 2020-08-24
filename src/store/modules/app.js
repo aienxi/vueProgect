@@ -2,13 +2,13 @@ const state = {
   currentPage: 'recommend'
 }
 const mutations = {
-  SET_CURRENT_PAGE: (name) => {
-    state.currentPage = name
+  SET_CURRENT_PAGE: (state, pageName) => {
+    state.currentPage = pageName
   }
 }
 const actions = {
-  setCurrentPage ({commit}, name) {
-    commit('SET_CURRENT_PAGE', name)
+  setCurrentPage ({commit}, pageName) {
+    commit('SET_CURRENT_PAGE', pageName)
   }
 }
 export default{

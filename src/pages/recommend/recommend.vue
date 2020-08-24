@@ -1,10 +1,11 @@
 <template>
-  <div>当前页面{{currentPage}}</div>
+  <div>
+
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   data () {
     return {
@@ -12,14 +13,16 @@ export default {
     }
   },
   mounted () {
-
   },
   computed: {
     ...mapGetters([
-      'currentPage'
+      'fullScreen'
     ])
   },
   methods: {
+    ...mapMutations({
+      setFullScreen: 'SET_FULL_SCREEN'
+    })
 
   }
 }

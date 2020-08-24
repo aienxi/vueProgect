@@ -6,68 +6,71 @@
       </router-link>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
-    <div class="navBar"></div>
+    <div  :class="showNavbar?'show-nav-bar':'not-show-nav-bar'"></div>
     <keep-alive>
           <router-view v-if="$route.meta.keepAlive"/>
     </keep-alive>
-    <mt-tabbar v-model="selected" :fixed="true">
-      <mt-tab-item id="tab_home">
-        <img class="icon-style" slot="icon" src="@/images/tabbar/tab_home.png" />
-        首页
-      </mt-tab-item>
-      <mt-tab-item id="tab_recommnd">
-        <img slot="icon" src="@/images/tabbar/tab_recommnd.png" />
-        推荐
-      </mt-tab-item>
-      <mt-tab-item id="tab_mys">
-        <img slot="icon" src="@/images/tabbar/tab_mys.png" />
-        我的
-      </mt-tab-item>
-      <mt-tab-item id="tab_account">
-        <img slot="icon" src="@/images/tabbar/tab_account.png" />
-        账号
-      </mt-tab-item>
-    </mt-tabbar>
+    <tabbar v-show="showTabbar"></tabbar>
+    <susview></susview>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import Tabbar from '@/components/Tabbar'
+import SusView from '@/components/SusView'
+
 export default {
   name: 'App',
+  components: {
+    tabbar: Tabbar,
+    susview: SusView
+  },
   data () {
     return {
       selected: 'tab_home'
     }
   },
+  computed: {
+    ...mapGetters([
+      'currentPage'
+    ]),
+    showTabbar (newValue) {
+      var show = true
+      console.log('showNavbar')
+      var arrNavPage = ['home', 'mys', 'recommend', 'user']
+
+      if (arrNavPage.indexOf(this.currentPage) !== -1) {
+        show = true
+      } else {
+        show = false
+      }
+      return show
+    },
+    showNavbar (showNavbar) {
+      return false
+    }
+
+  },
   created () {
     // 注意，在Chrome浏览器中打印
-    console.log(window.navigator)
   },
   mounted () {
   },
   methods: {},
   watch: {
-    selected (newValue) {
-      console.log(newValue)
-      if (newValue === 'tab_home') {
-        this.$router.replace('/')
-      } else if (newValue === 'tab_recommnd') {
-        this.$router.replace('/recommend')
-      } else if (newValue === 'tab_mys') {
-        this.$router.replace('/mys')
-      } else if (newValue === 'tab_account') {
-        this.$router.replace('/user')
-      } else {
-
-      }
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.navBar{
+.show-nav-bar{
   width: 100%;
   height: 88px;
 }
+.not-show-nav-bar{
+  width: 100%;
+  height: 0;
+}
+
 </style>
