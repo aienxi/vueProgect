@@ -12,7 +12,7 @@
       </div>
       <!-- 占位 -->
       <div class="tabbar-item">
-      </div>
+     </div>
 
       <div class="tabbar-item" @click="selectTabbar(2)">
         <img v-if="selectIndex !== 2" class="tabbar-item-icon" src="@/images/tabbar/tab_account.png" alt="">
@@ -29,7 +29,10 @@
 </template>
 
 <script>
+
 export default {
+  components: {
+  },
   name: 'Tabbar',
   data () {
     return {
@@ -81,7 +84,7 @@ $iconSize:50px;
   display: flex;
   flex-direction: row;
   background: #ffffff;
-  z-index: 999;
+  z-index: 500;
 }
 .tabbar-item{
   height: $tabbarHeight;

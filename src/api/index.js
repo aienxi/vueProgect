@@ -1,10 +1,12 @@
-import home from '@/api/homeApi'
-import mys from '@/api/mysApi'
-import recommend from '@/api/recommendApi'
+import homeApi from '@/api/homeApi'
+import mysApi from '@/api/mysApi'
+import recommendApi from '@/api/recommendApi'
+import bookApi from '@/api/bookApi'
 
 export default {
-  home,
-  mys,
-  recommend
+  homeApi,
+  mysApi,
+  recommendApi,
+  bookApi
 
 }

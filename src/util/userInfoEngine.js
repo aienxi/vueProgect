@@ -12,7 +12,7 @@ export default {
 
 function getUserInfo () {
   var userInfo = JSON.parse(localStorage.getItem('userInfo')) 
-  if(!userInfo){
+  if(!userInfo.uid){
     userInfo ={
       uid:'22651',
       aid:'60',

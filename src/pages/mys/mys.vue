@@ -12,7 +12,7 @@
         <div ref="history" class="history-content">
           <div class="scroll-content" ref="historyContent">
             <div  v-for="(item,index) in historyList" :key="item.bookid" >
-              <div :class="index===0?'book-item0':'book-item'" v-if="index<10">
+              <div :class="index===0?'book-item0':'book-item'" v-if="index<10" @click="clickBook(item)">
                 <img class="book-cover" :src="item.bookimg" alt="" >
                 <div class="book-title">{{item.bookname}}}</div>
               </div>
@@ -56,7 +56,7 @@ export default {
   methods: {
     getHistory () {
       this.$toast.showLoading()
-      this.$api.mys.getHistory().then(res => {
+      this.$api.mysApi.getHistory().then(res => {
         var code = res.data.code
         console.log(res)
         this.$toast.hideLoading()
@@ -81,6 +81,9 @@ export default {
     },
     getYouLike () {
 
+    },
+    clickBook (bookItem) {
+      this.$router.push({name: 'history', params: {bookid: bookItem.bookid}})
     }
   }
 

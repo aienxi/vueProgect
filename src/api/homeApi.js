@@ -10,6 +10,7 @@ export default {
   // 获取首页信息
   getHomeInfo () {
     var userInfo = userInfoEngine.getUserInfo()
+    console.log(userInfo)
     var enc = md5.hex_md5(userInfo.aid + userInfo.uid + userInfo.siteid + util.getHourDate() + base.API_KEY)
     var url = `${base.SERVER_URL}/api/getlittleindexinfo?aid=${userInfo.aid}&uid=${userInfo.uid}&siteid=${userInfo.siteid}&enc=${enc}`
     return networkEngine.get(url)

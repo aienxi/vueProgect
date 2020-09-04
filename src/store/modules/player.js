@@ -1,6 +1,6 @@
 const state = {
   fullScreen: false,
-  playStatus: 1,
+  playStatus: 0,
   currentBookInfo: {}
 }
 const mutations = {

@@ -16,5 +16,5 @@ function authChapterIsOpen(bookInfo, chapterIndex) {
     return true;
   }
 
-  return false;
+  return false; 
 }

@@ -27,12 +27,12 @@ instance.interceptors.request.use(
         if (config.method === 'post') {
             let data = qs.parse(config.data)
             config.data = sq.stringify({
-                v:'wx',
+                v:'wxapp',
                 ...data
             })
         } else if(config.method === 'get'){
             config.params = {
-                v:'wx',
+                v:'wxapp',
                 ...config.params
             }
         } 

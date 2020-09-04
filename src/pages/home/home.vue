@@ -90,7 +90,8 @@ export default {
   mounted () {
     this.$toast.showLoading()
     let that = this
-    this.$api.home.getHomeInfo().then(res => {
+    this.$api.homeApi.getHomeInfo().then(res => {
+      console.log(res)
       this.$toast.hideLoading()
       var code = res.data.code
       if (code === 1) {
@@ -109,8 +110,8 @@ export default {
         that.swiperClassArr = arrClass
         that.classList = arrCla
       }
-    }).catch(() => {
-
+    }).catch((e) => {
+      console.log(e)
     })
 
     window.addEventListener('scroll', this.onPageScroll)
@@ -130,8 +131,7 @@ export default {
       console.log(e)
     },
     clickBook (bookItem) {
-      console.log(bookItem)
-      this.$router.push('/bookdetail')
+      this.$router.push({name: 'bookDetail', params: {bookid: bookItem.bookid}})
     },
     onPageScroll (e) {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -170,7 +170,7 @@ export default {
   width: 750px;
   height: 418px;
   position: absolute;
-  z-index: 0;
+  // z-index: 0;
   background: gray;
   top: 0;
   left: 0;
@@ -178,7 +178,7 @@ export default {
 .top-search-view{
   width: 750px;
   position: fixed;
-  z-index: 999;
+  z-index: 10;
   top:0;
   height:100px;
   background:rgba(255,255,255,0)
@@ -201,19 +201,16 @@ export default {
   flex-direction: row;
   align-items: center;
   position: absolute;
-}
-.top-search-view .top-search-searchbox.top{
+} .top-search-searchbox.top{
   background-color: rgba(255,255,255,0.1);
-}
-.top-search-view .top-search-searchbox.bottom{
+} .top-search-searchbox.bottom{
   background-color: rgba(0,0,0,0.1);
 
-}
-.top-search-view .search-title.top{
+} .search-title.top{
   color:#FFFFFF;
 
 }
-.top-search-view .search-title.bottom{
+ .search-title.bottom{
   color:#333333;
 
 }
@@ -236,7 +233,7 @@ export default {
 }
 .top-white-color-view{
   position: absolute;
-  z-index: 0;
+  // z-index: 0;
   background: #FFFFFF;
   border-radius: 25px 25px 0 0;
   width: 750px;
@@ -390,7 +387,7 @@ export default {
 .item-cover{
     height:200px;
     width: 142px;
-    z-index: 50;
+    // z-index: 50;
     margin-left: 12px;
 }
 .item-name{
@@ -410,7 +407,7 @@ export default {
   position:absolute;
   top: 0;
   left: 12px;
-  z-index: 10;
+  z-index: 9;
 }
 
 </style>

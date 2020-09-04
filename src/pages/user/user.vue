@@ -19,5 +19,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.aa{
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  border-width: 1px;
+  vor
+}
 </style>
