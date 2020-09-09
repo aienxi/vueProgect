@@ -17,12 +17,12 @@
       <div class="tabbar-item" @click="selectTabbar(2)">
         <img v-if="selectIndex !== 2" class="tabbar-item-icon" src="@/images/tabbar/tab_account.png" alt="">
         <img v-if="selectIndex === 2" class="tabbar-item-icon" src="@/images/tabbar/tab_account_select.png" alt="">
-        <div class="tabbar-item-title" :class="selectIndex === 2?'select':'unselect'">账号</div>
+        <div class="tabbar-item-title" :class="selectIndex === 2?'select':'unselect'">我的</div>
       </div>
       <div class="tabbar-item" @click="selectTabbar(3)">
         <img v-if="selectIndex !== 3" class="tabbar-item-icon" src="@/images/tabbar/tab_mys.png" alt="">
         <img v-if="selectIndex === 3" class="tabbar-item-icon" src="@/images/tabbar/tab_mys_select.png" alt="">
-        <div class="tabbar-item-title" :class="selectIndex === 3?'select':'unselect'">我的</div>
+        <div class="tabbar-item-title" :class="selectIndex === 3?'select':'unselect'">账号</div>
       </div>
 
     </div>

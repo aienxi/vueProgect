@@ -1,8 +1,9 @@
 const getters = {
-  currentPage: state => state.app.currentPage,
   fullScreen: state => state.player.fullScreen,
   playStatus: state => state.player.playStatus,
   currentBookInfo: state => state.player.currentBookInfo,
+  currentPage: state => state.app.currentPage,
+  direction: state => state.app.direction,
   showTabbar: (state) => {
     var arrNavPage = ['home', 'mys', 'recommend', 'user']
 

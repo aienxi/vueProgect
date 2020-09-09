@@ -27,6 +27,7 @@
           ref="wapper" >
           <img :src="currentBookInfo.Imageurl" alt="" class="cdView_img" :class="cdCss">
         </div>
+
         <!--底部按钮控制部分-->
         <div class="player-bar">
           <div class="p_b_c">
@@ -97,12 +98,14 @@ export default {
         label: '2倍',
         type: 'default'
       }]
+
     }
   },
   components: {
   },
   // 滑动touch
   created () {
+    this.touch = {}
   },
   // 填充歌曲信息 控制歌曲播放
   computed: {
@@ -150,6 +153,7 @@ export default {
 
       })
     },
+    cdCls () {},
     // 监听progressBar派发的事件
     onProgressBarChange (percent) {
       const currentTime = this.duration * percent
@@ -252,6 +256,7 @@ export default {
     },
 
     middleTouchStart (e) {
+      console.log('middleTouchStart')
       this.touch.initiated = true
       // 用来判断是否是一次移动
       this.touch.moved = false
@@ -264,9 +269,13 @@ export default {
       if (!this.touch.initiated) {
         return
       }
+      console.log('middleTouchMove')
+
       const touch = e.touches[0]
       const deltaX = touch.pageX - this.touch.startX
       const deltaY = touch.pageY - this.touch.startY
+      console.log('deltaX = ' + deltaX)
+      console.log('deltaY = ' + deltaY)
       // y轴距离大于x轴距离 => 纵向滚动 => 返回
       if (Math.abs(deltaY) > Math.abs(deltaX)) {
         return
@@ -282,6 +291,7 @@ export default {
       this.$refs.wapper.style[transitionDuration] = 0
     },
     middleTouchEnd () {
+      console.log('middleTouchEnd')
       if (!this.touch.moved) {
         return
       }
@@ -318,6 +328,7 @@ export default {
 
     // vue transition 动画钩子
     enter (el, done) {
+      console.log('enter')
       const {x, y, scale} = this._getPosAndScale()
 
       let animation = {
@@ -344,16 +355,20 @@ export default {
       animations.runAnimation(this.$refs.cdWrapper, 'move', done)
     },
     afterEnter () {
+      console.log('afterEnter')
+
       animations.unregisterAnimation('move')
       this.$refs.cdWrapper.style.animation = ''
     },
     leave (el, done) {
+      console.log('leave')
       this.$refs.cdWrapper.style.transition = 'all 0.4s'
       const {x, y, scale} = this._getPosAndScale()
       this.$refs.cdWrapper.style[transform] = `translate3d(${x}px,${y}px,0) scale(${scale})`
       this.$refs.cdWrapper.addEventListener('transitionend', done)
     },
     afterLeave () {
+      console.log('afterLeave')
       this.$refs.cdWrapper.style.transition = ''
       this.$refs.cdWrapper.style[transform] = ''
     },

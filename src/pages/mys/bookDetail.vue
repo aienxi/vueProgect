@@ -69,9 +69,13 @@
       </div>
     </div>
 
-    <div class="chapter-content" id="chapterContent" >
+    <div class="chapter-content" :style="'top:' + chapterTop + 'px'" >
       <!-- 触控条 -->
-      <div id="touchBar">
+      <div  class="touchBar"
+      @touchstart.prevent="touchstart"
+      @touchmove.prevent="touchmove"
+      @touchend.prevent="touchend"
+      >
         <div class="touch-bar">
           <div class="touch-icon"></div>
         </div>
@@ -88,26 +92,25 @@
       <div class="chapter-play-view">
         <div class="play-button">
           <img class="play-button-img" alt="" src="@/images/playaudio/play.png" />
-          <div  id="continuePlayButton" class="play-button-title" onclick="continuePlay()" >开始播放</div>
+          <div  id="continuePlayButton" class="play-button-title" @click="continuePlay()" >开始播放</div>
           <div class="play-button-chapter-size">（共{{bookInfo.chaptercount}}章）</div>
         </div>
       </div>
       <!-- 滑动内容 -->
       <div class="wrapper" ref="wrapper" >
         <div class="scr-content">
-          <div>
             <div class="page-base">
               <div class="chapter-wrapper">
                 <div class="chapter-wrapper-div">
-                  <div  v-for="(item , index) in bookInfo.chapterList"  :key="index" >
-                    <div id="<%= chapterList.get(i).getChapterId() %>" >
+                  <div  v-for="(item , index) in chapterList"  :key="index" >
+                    <div :id="item.cid" >
                       <div class="chapter-base">
-                        <div id="ctitle<%= chapterList.get(i).getChapterId() %>" class="chapter-title" >{{item.chaptertitle}}</div>
+                        <div :id="'ctitle' + item.cid" class="chapter-title" >{{item.title}}</div>
                         <div class="capter-info">
-                          <img class="capter-icon" alt="" src="image/bookrach_booksize.png" >
-                          <div class="capter-text">{{item.chaptertitle}}</div>
-                          <img class="capter-icon" style="margin-left: 20px;" alt="" src="image/bookrack_during.png" >
-                          <div class="capter-text"> {{item.chaptertitle}} </div>
+                          <img class="capter-icon" alt="" src="@/images/book/bookrach_booksize.png" >
+                          <div class="capter-text">{{item.size}}</div>
+                          <img class="capter-icon" style="margin-left: 20px;" alt="" src="@/images/book/bookrack_during.png" >
+                          <div class="capter-text"> {{item.times}} </div>
                         </div>
                       </div>
                     </div>
@@ -117,7 +120,6 @@
               </div>
 
             </div>
-          </div>
           <div>
             <!-- 相似推荐 -->
             <div class="page-base">
@@ -160,19 +162,22 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import BScroll from 'better-scroll'
-
+import util from '@/util/util'
 export default {
   data () {
     return {
       bookInfo: {},
       classList: [],
       similaryList: [],
-      contentScroll: null
+      contentScroll: null,
+      chapterList: [],
+      touchBegin: 0,
+      screenHeight: window.innerHeight,
+      pandBotton: 100,
+      chapterTop: 300
     }
   },
-  created () {},
-  mounted () {
-    console.log(this.$route.params)
+  created () {
     this.$api.bookApi
       .getBookInfo(this.$route.params.bookid)
       .then((res) => {
@@ -180,10 +185,14 @@ export default {
         var code = res.data.code
         if (code === 1) {
           this.bookInfo = res.data.data
+
+          this.chapterList = util.chapterListDeal(this.bookInfo.chapterlist)
         } else {
         }
       })
       .catch(() => {})
+  },
+  mounted () {
     this.contentScroll = new BScroll(this.$refs.wrapper, {
       scrollX: true,
       scrollY: false,
@@ -222,6 +231,35 @@ export default {
         this.contentScroll.goToPage(0, 0, 300)
       } else {
         this.contentScroll.goToPage(1, 0, 300)
+      }
+    },
+    continuePlay () {
+      this.showPlayer()
+    },
+    touchstart (e) {
+      var touch = e.touches[0]
+      this.touchBegin = parseInt(touch.pageY)
+    },
+    touchmove (e) {
+      e.preventDefault()
+      var touch = e.touches[0]
+      var top = parseInt(touch.pageY)
+      if (top < 88) {
+        this.chapterTop = 88
+      } else if (top > this.screenHeight - 88) {
+        this.chapterTop = this.screenHeight - this.pandBotton
+      } else {
+        this.chapterTop = top
+      }
+      console.log(this.chapterTop)
+
+      // $('#chapterContent').attr('style', 'top:' + top + 'px')
+    },
+    touchend (e) {
+      if (this.chapterTop - this.touchBegin < 0) {
+        this.chapterTop = 88
+      } else {
+        this.chapterTop = this.screenHeight - this.pandBotton
       }
     }
   }

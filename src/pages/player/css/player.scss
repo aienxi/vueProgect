@@ -1,5 +1,4 @@
 
-@import '../../../style/variable.scss';
 
 $blur :blur(100px); 
 
@@ -137,7 +136,6 @@ $blur :blur(100px);
     z-index: 600;
     width: 64px;
     height: 64px;
-	background: $color-background;
 	border-radius: 50%;
 	border-width: 0;
 	animation: rotate 15s linear infinite;

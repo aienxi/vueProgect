@@ -55,11 +55,13 @@ export default {
   },
   methods: {
     getHistory () {
-      this.$toast.showLoading()
+      this.$vux.loading.show({
+        text: '加载中'
+      })
       this.$api.mysApi.getHistory().then(res => {
         var code = res.data.code
         console.log(res)
-        this.$toast.hideLoading()
+        this.$vux.loading.hide()
 
         if (code === 1) {
           this.historyList = res.data.data

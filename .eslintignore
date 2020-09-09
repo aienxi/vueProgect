@@ -3,3 +3,4 @@
 /dist/
 /*.js
 /src/util/*.js
+/node_modules/

@@ -14,24 +14,24 @@
             <!-- 顶部banner图下的带圆角的背景图 -->
         <div class="top-white-color-view">
         </div>
-        <mt-swipe :auto="4000" class="swipe">
-            <mt-swipe-item v-for="(item,index) in swipterList" :key="index">
+        <swiper :auto="true" class="swipe" dots-position="center">
+            <swiper-item v-for="(item,index) in swipterList" :key="index">
                 <img class="banner-image" :src="item.imageUrl" alt="">
-            </mt-swipe-item>
-    </mt-swipe>
+            </swiper-item>
+        </swiper>
 
       <!-- 滑动分类 -->
   <div class='cfylist'>
-    <mt-swipe :auto='0' class='class-swiper' :show-indicators='false'  @change='classSwiperChange'>
-      <mt-swipe-item class="cfylist-item" v-for="(item,index) in swiperClassArr"  :key="index + 100">
+    <swiper :auto='false' class='class-swiper' :show-dots='false'  @change='classSwiperChange'>
+      <swiper-item class="cfylist-item" v-for="(item,index) in swiperClassArr"  :key="index + 100">
         <div class="class-swiper-item-base" @change='classImageChange'>
-          <div class="cfyicon" v-for="(item,index) in swiperClassArr[index]"  :key="index">
+          <div class="cfyicon" v-for="(item,index) in swiperClassArr[index]"  :key="index" @click="clickClass(item.classId)">
             <img class="cfyicon-image" :src="item.classimg" />
             <label class="cfyicon-name">{{item.className}}</label >
           </div>
       </div>
-    </mt-swipe-item>
-  </mt-swipe>
+    </swiper-item>
+  </swiper>
       <!-- class 自定义指示点dot -->
     <div class="dots">
       <div class="base">
@@ -49,9 +49,9 @@
     <div class="book-card-view">
       <div class="classfy">
         <div class='cfytitle'>{{item.className}}</div>
-        <div class="more-view themeGray">
+        <div class="more-view themeGray" @click="clickClass(item.classId)">
           <div class="morecfy">更多</div>
-          <img class="more-image" src="/images/index/btn_arrow_right.png" />
+          <img class="more-image" src="@/images/index/btn_arrow_right.png" />
         </div>
     </div>
     <!-- 横向排列的书籍 -->
@@ -72,8 +72,13 @@
 </template>
 
 <script>
+import { Swiper, SwiperItem } from 'vux'
 
 export default {
+  components: {
+    Swiper,
+    SwiperItem
+  },
   data () {
     return {
       navStyle: '',
@@ -85,14 +90,19 @@ export default {
     }
   },
   created () {
-
+    console.log('home created')
   },
   mounted () {
-    this.$toast.showLoading()
     let that = this
+// 显示
+    this.$vux.loading.show({
+      text: '加载中'
+    })
+
     this.$api.homeApi.getHomeInfo().then(res => {
-      console.log(res)
-      this.$toast.hideLoading()
+      // console.log(res)
+      this.$vux.loading.hide()
+
       var code = res.data.code
       if (code === 1) {
         that.swipterList = res.data.slide
@@ -130,6 +140,12 @@ export default {
     backScrollr (e) {
       console.log(e)
     },
+    // 点击分类
+    clickClass (classId) {
+      console.log(classId)
+      this.$router.push({name: 'classList', params: {classId: classId}})
+    },
+    // 点击书 跳转到书的详情
     clickBook (bookItem) {
       this.$router.push({name: 'bookDetail', params: {bookid: bookItem.bookid}})
     },
@@ -146,7 +162,7 @@ export default {
           this.setNavBarStyle(1)
         }
 
-        this.navOpacity = scrollTop / 100
+        this.navOpacity = scrollTop / 100.0
       } else {
         this.navOpacity = 1
         this.navStyle = 'bottom'
@@ -165,7 +181,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .top-color-view{
   width: 750px;
   height: 418px;

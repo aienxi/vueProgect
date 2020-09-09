@@ -279,7 +279,9 @@ $blur: blur(100px);
 	color:rgba(153,153,153,1);
 	margin-left: 10px;
 }
-
+.touchBar{
+	position: relative;
+}
 .chapter-sp-line{
 	margin-left: 40px;
 	width: 670px;
@@ -288,6 +290,7 @@ $blur: blur(100px);
 }
 
 .wrapper{ 
+	position: relative;
 	width: 750px;
 	height: 100%;
 	overflow: hidden;
@@ -299,17 +302,19 @@ $blur: blur(100px);
 
 .page-base{
 	width: 750px;
-	height: auto;
+	height: 100%;
 	font-size: 28px;
 	float: left;
+	position: relative;
+
 }
 .chapter-wrapper{
 	position: relative;
 	left: 0;
 	top: 0;
-	
+	bottom: 0;
 	width: 100%;
-	overflow:hidden;
+	height: 100%;
 }
 .chapter-wrapper-div{
 	width: 100%;

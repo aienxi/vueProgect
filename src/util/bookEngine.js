@@ -1,10 +1,10 @@
-var util = require('util.js');
 
 var userEngine = require('userEngine.js');
 
-var app = getApp();
 module.exports = {
-  authChapterIsOpen: authChapterIsOpen
+  authChapterIsOpen,
+  saveLastBook,
+  getLastBook
 }; // 
 
 function authChapterIsOpen(bookInfo, chapterIndex) {
@@ -17,4 +17,12 @@ function authChapterIsOpen(bookInfo, chapterIndex) {
   }
 
   return false; 
+}
+
+function saveLastBook(bookInfo) {
+    localStorage.setItem('lastBookInfo',JSON.stringify(bookInfo))
+
+}
+function getLastBook() {
+  return JSON.parse(localStorage.getItem('lastBookInfo'))
 }

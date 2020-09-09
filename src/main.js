@@ -1,23 +1,30 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
+import FastClick from 'fastclick'
 import router from './router'
 import api from './api' // 导入api接口
-import toast from './util/toast'
+import App from './App'
 import store from '@/store'
-Vue.config.productionTip = false
 
+// ********************* vux *********************
+import { BusPlugin, ToastPlugin, LoadingPlugin } from 'vux'
+
+Vue.use(LoadingPlugin)
+// 默认参数
+Vue.use(ToastPlugin, {position: 'default', isShowMask: 'true'})
+Vue.use(BusPlugin)
+
+Vue.config.productionTip = false
 // 网路请求
 Vue.prototype.$api = api
-// 提示框
-Vue.prototype.$toast = toast
 
+FastClick.attach(document.body)
+Vue.config.productionTip = false
 /* eslint-disable no-new */
+
 new Vue({
-  el: '#app',
   router,
-  components: { App },
-  template: '<App/>',
-  store: store
-})
+  store,
+  render: h => h(App)
+}).$mount('#app-box')

@@ -1,134 +1,92 @@
 <template>
   <div id="app">
-    <mt-header fixed title="导航栏" v-show="false">
-      <router-link to="/" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
-    </mt-header>
-    <div  :class="showNavbar?'show-nav-bar':'not-show-nav-bar'"></div>
     <keep-alive>
         <transition
         @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
         :name="viewTransition" :css="!!direction">
+        <keep-alive v-if="$route.meta.keepAlive">
           <router-view v-if="$route.meta.keepAlive"/>
-        </transition>
-
-    </keep-alive>
-        <transition
-        @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
-        :name="viewTransition" :css="!!direction">
+        </keep-alive>
           <router-view v-if="!$route.meta.keepAlive"/>
         </transition>
 
+    </keep-alive>
+      <!-- <transition
+      @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
+      :name="viewTransition" :css="!!direction">
+        <router-view />
+      </transition> -->
     <tabbar v-show="showTabbar"></tabbar>
     <audioPlayer></audioPlayer>
   </div>
+
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+
 import Tabbar from '@/components/Tabbar'
 import AudioPlayer from '@/pages/player/AudioPlayer'
 
 export default {
-  name: 'App',
+  name: 'app',
   components: {
     tabbar: Tabbar,
     audioPlayer: AudioPlayer
   },
-  data () {
-    return {
-      selected: 'tab_home'
-    }
-  },
   computed: {
     ...mapGetters([
-      'showTabbar'
-    ]),
-    // showTabbar (newValue) {
-    //   var show = true
-    //   var arrNavPage = ['home', 'mys', 'recommend', 'user']
+      'showTabbar',
+      'direction'
 
-    //   if (arrNavPage.indexOf(this.currentPage) !== -1) {
-    //     show = true
-    //   } else {
-    //     show = false
-    //   }
-    //   return show
-    // },
-    showNavbar (showNavbar) {
-      return false
+    ]),
+    viewTransition () {
+      if (!this.direction) return ''
+      console.log(this.direction)
+      if (this.showTabbar && this.direction !== 'reverse') {
+        return ''
+      }
+      return 'vux-pop-' + (this.direction === 'forward' ? 'in' : 'out')
     }
 
-  },
-  created () {
-    // 注意，在Chrome浏览器中打印
-  },
-  mounted () {
-  },
-  methods: {},
-  watch: {
   }
+
 }
 </script>
 
-<style lang="scss" scoped>
-.show-nav-bar{
-  width: 100%;
-  height: 88px;
-}
-.not-show-nav-bar{
-  width: 100%;
-  height: 0;
-}
-// .slide-enter-active,.slide-leave-active{
-//           transition: all 0.3s;
-//     }
+<style lang="less">
+@import '~vux/src/styles/reset.less';
 
-// .slide-enter,.slide-leave-to{
-//       transform: translate3d(100%,0,0);
-
-// }
-.slide-enter{
-    transform:  translate3d(-750px,0,0);
+body {
+  background-color: #fbf9fe;
 }
-.slide-enter-active{
-    transition: all .3s;
+.vux-pop-out-enter-active,
+.vux-pop-out-leave-active,
+.vux-pop-in-enter-active,
+.vux-pop-in-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  height: 100%;
+  top: 0;
+  position: absolute;
+  backface-visibility: hidden;
+  perspective: 1000;
 }
-
-.slide-leave-to {
-    transform:  translate3d(-750px,0,0);
+.vux-pop-out-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
 }
-.slide-leave-active {
-    transition: all .3s;
+.vux-pop-out-leave-active {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
 }
-@keyframes fadeinR {
-  0% {
-    opacity: 0;
-    transform: translateX(150px);
-  }
-  100% {
-    opacity:1;
-    transform:translateX(0);
-  }
+.vux-pop-in-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
 }
-.vux-header-fade-in-right-enter-active {
-  animation: fadeinR .5s;
-}
-.vux-header-fade-in-left-enter-active {
-  animation: fadeinL .5s;
-}
-
-@keyframes fadeinL{
-  0% {
-    opacity: 0;
-    transform: translateX(-150px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.vux-pop-in-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
 }
 
 </style>

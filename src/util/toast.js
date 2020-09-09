@@ -1,5 +1,3 @@
-import { Toast } from 'mint-ui'
-import { Indicator } from 'mint-ui';
 
  export default  {
     showLoading,
@@ -8,35 +6,40 @@ import { Indicator } from 'mint-ui';
     showFailToast,
     showInfoToast,
 }
+
 function showLoading(msg){
-    Indicator.open({
-        text: msg?msg:'加载中...',
-        spinnerType: 'fading-circle'
-      });
-      
+    console.log(this)
+    console.log(this.$vux)
+    if(!msg){
+        msg = "加载中"
+    }
+    this.$vux.loading.show({
+        text: msg
+       })
+             
 }
 function hideLoading(){
-    Indicator.close();
+    this.$vux.loading.hide()
 }
 function showSucceedToast(msg){
-    Toast({
-        message: msg,
-        iconClass: 'mintui mintui-field-success'
+    // Toast({
+    //     message: msg,
+    //     iconClass: 'mintui mintui-field-success'
 
-      });
+    //   });
 }
 function  showFailToast(msg){
-    Toast({
-        message: msg,
-        iconClass: 'icon mintui-field-error'
+    // Toast({
+    //     message: msg,
+    //     iconClass: 'icon mintui-field-error'
 
-      });
+    //   });
 }
 function showInfoToast(msg){
-    Toast({
-        message: msg,
-        iconClass: 'icon mintui-field-warning'
+    // Toast({
+    //     message: msg,
+    //     iconClass: 'icon mintui-field-warning'
 
-      });
+    //   });
       
 }
