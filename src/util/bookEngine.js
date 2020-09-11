@@ -3,8 +3,10 @@ var userEngine = require('userEngine.js');
 
 module.exports = {
   authChapterIsOpen,
-  saveLastBook,
-  getLastBook
+  addHistoryBook,
+  getHistoryBookList,
+  getLastBook,
+  playHistory
 }; // 
 
 function authChapterIsOpen(bookInfo, chapterIndex) {
@@ -18,11 +20,24 @@ function authChapterIsOpen(bookInfo, chapterIndex) {
 
   return false; 
 }
-
-function saveLastBook(bookInfo) {
-    localStorage.setItem('lastBookInfo',JSON.stringify(bookInfo))
-
+// 历史最多存储50条
+function addHistoryBook(bookInfo) {
+  var arrBook = JSON.parse(localStorage.getItem('historyBook'))
+  
+  if (!arrBook) {
+    arrBook = []
+  }
+  if (arrBook.length >= 50) {
+    arrBook.pop()
+  }
+  arrBook.push(bookInfo)
+  localStorage.setItem('historyBook',JSON.stringify(arrBook))
 }
+function getHistoryBookList() {
+  return JSON.parse(localStorage.getItem('historyBook'))
+}
+// 获取最后一条听书记录
 function getLastBook() {
-  return JSON.parse(localStorage.getItem('lastBookInfo'))
+  var bookInfo = JSON.parse(localStorage.getItem('playHistory'))
+  return  bookInfo
 }

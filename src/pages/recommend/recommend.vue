@@ -1,12 +1,16 @@
 <template>
   <div>
-推荐
+    <div v-for="index in 50" :key="index">
+      {{index}}推荐
+    </div>
+
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 export default {
+  name: 'recommend',
   data () {
     return {
 

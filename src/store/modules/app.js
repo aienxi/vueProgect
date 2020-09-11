@@ -1,14 +1,19 @@
 const state = {
   currentPage: 'recommend',
-  direction: 'forward'
+  direction: 'forward',
+  scrollTop: 0
 
 }
 const mutations = {
+
   SET_CURRENT_PAGE: (state, pageName) => {
     state.currentPage = pageName
   },
   UPDATE_DIRECTION (state, direction) {
     state.direction = direction
+  },
+  SET_SCROLL_TOP: (state, top) => {
+    state.scrollTop = top
   }
 }
 const actions = {
@@ -17,6 +22,9 @@ const actions = {
   },
   updateDirection ({commit}, direction) {
     commit('UPDATE_DIRECTION', direction)
+  },
+  setScrollTop ({commit}, top) {
+    commit('SET_SCROLL_TOP', top)
   }
 }
 export default{

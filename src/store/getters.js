@@ -4,6 +4,7 @@ const getters = {
   currentBookInfo: state => state.player.currentBookInfo,
   currentPage: state => state.app.currentPage,
   direction: state => state.app.direction,
+  scrollTop: state => state.app.scrollTop,
   showTabbar: (state) => {
     var arrNavPage = ['home', 'mys', 'recommend', 'user']
 

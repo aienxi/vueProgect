@@ -36,5 +36,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/style/theme.scss';
 
 </style>

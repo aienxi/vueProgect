@@ -6,14 +6,15 @@ import router from './router'
 import api from './api' // 导入api接口
 import App from './App'
 import store from '@/store'
-
 // ********************* vux *********************
-import { BusPlugin, ToastPlugin, LoadingPlugin } from 'vux'
+import { BusPlugin, ToastPlugin, LoadingPlugin, ViewBox } from 'vux'
 
 Vue.use(LoadingPlugin)
 // 默认参数
 Vue.use(ToastPlugin, {position: 'default', isShowMask: 'true'})
 Vue.use(BusPlugin)
+
+Vue.component('view-box', ViewBox)
 
 Vue.config.productionTip = false
 // 网路请求

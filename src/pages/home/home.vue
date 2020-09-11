@@ -75,6 +75,7 @@
 import { Swiper, SwiperItem } from 'vux'
 
 export default {
+  name: 'home',
   components: {
     Swiper,
     SwiperItem
@@ -124,7 +125,7 @@ export default {
       console.log(e)
     })
 
-    window.addEventListener('scroll', this.onPageScroll)
+    // window.addEventListener('scroll', this.onPageScroll)
   },
 
   methods: {
@@ -151,7 +152,6 @@ export default {
     },
     onPageScroll (e) {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-
       if (scrollTop <= 100) {
         if (scrollTop <= 50) {
           this.navStyle = 'top'

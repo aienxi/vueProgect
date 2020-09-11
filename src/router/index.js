@@ -4,13 +4,25 @@ import store from '@/store'
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      console.log(from)
+
+      if (from.meta.keepAlive) {
+        from.meta.savedPosition = document.body.scrollTop
+      }
+      return { x: 0, y: to.meta.savedPosition || 0 }
+    }
+  },
   routes: [
     {
       path: '/',
       name: 'home',
       component: () => import('@/pages/home/Home'),
-      meta: { keepAlive: true }
+      meta: {keepAlive: true}
     },
     {
       path: '/classList/:classId',
@@ -49,6 +61,7 @@ const router = new Router({
     }
   ]
 })
+
 // simple history management
 const history = window.sessionStorage
 history.clear()
@@ -119,4 +132,5 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
 export default router

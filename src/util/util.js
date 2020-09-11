@@ -32,9 +32,9 @@ function chapterListDeal(chapterList) {
   return chapterList;
 }
 function secondToTime(second) {
-  var hours = Math.floor(second / 60 / 60);
-  var minutes = Math.floor(second % 3600 / 60);
-  second = second % 60 % 60;
+  var hours = second / 60 / 60 | 0;
+  var minutes = second % 3600 / 60 | 0;
+  second = second % 60 % 60 | 0;
   var time =  (hours > 0 ? (hours < 10 ? "0" + hours : hours) + ":" : "") 
   + (minutes > 0 ? minutes < 10 ? "0" + minutes + ":" : minutes + ":" : "00:") 
   + (second < 10 ? "0" + second : second);

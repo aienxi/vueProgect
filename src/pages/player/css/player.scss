@@ -1,3 +1,4 @@
+@import '@/style/theme.scss';
 
 
 $blur :blur(100px); 
@@ -128,23 +129,27 @@ $blur :blur(100px);
 }
 
 .mini-player{
-    display: flex;
-    align-items: center;
     position: fixed;
     right: 343px;
     bottom: 18px;
     z-index: 600;
     width: 64px;
-    height: 64px;
+	height: 64px;
+	background:white;
 	border-radius: 50%;
-	border-width: 0;
-	animation: rotate 15s linear infinite;
-	animation-play-state: paused;
+
 }   
 .mini-img{
     width: 64px;
     height: 64px;
 	border-radius: 50%;
+	animation: rotate 15s linear infinite;
+	animation-play-state: paused;
+	 background: $color-theme;
+	// border: 2px solid goldenrod;
+}
+img{
+	border: none;
 }
 .image-rotate{
 
@@ -163,6 +168,33 @@ $blur :blur(100px);
 	{transform: rotate(360deg);}
   
 }
+.progress-wrapper{
+	display: flex;
+	align-items: center;
+	width: 80%;
+	margin: 0px auto;
+	padding: 10px 0;
+	}
+.time{
+	color: white;
+	font-size: 28px;
+	flex: 0 0 30px;
+	line-height: 30px;
+    &.time-l{
+		text-align: left;
+		margin-right : 20px;
+		}
+	&.time-r{
+		text-align: right;
+		margin-left : 20px;
+		}
+	
+}
+.progress-bar-wrapper{
+	flex: 1;
+}
+
+
 // @keyframes moveBottom{
 // 0%
 //   {

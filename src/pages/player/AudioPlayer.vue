@@ -9,8 +9,6 @@
       <div class="normal-player" v-show="fullScreen" ref="cdWrapper">
         <!--背景 模糊-->
         <img class="view-back" :src="currentBookInfo.Imageurl" alt="">
-        <!-- <div class="view-back" :style="'background: url(' + currentBookInfo.Imageurl + ')no-repeat center center fixed;'"> -->
-        <!-- </div> -->
         <!--顶部-->
         <div class="player-nav-base">
           <div class="player_back_base" >
@@ -25,11 +23,37 @@
           @touchmove.prevent="middleTouchMove"
           @touchend="middleTouchEnd"
           ref="wapper" >
-          <img :src="currentBookInfo.Imageurl" alt="" class="cdView_img" :class="cdCss">
+          <img :src="currentBookInfo.Imageurl?currentBookInfo.Imageurl:require('../../images/lucency.png')" alt="" class="cdView_img" :class="cdCss">
         </div>
-
         <!--底部按钮控制部分-->
         <div class="player-bar">
+          <div class="operators">
+            <div class="icon i-left" @click="changeRate">
+              <i class="icon-rate"></i>
+            </div>
+
+            <div class="icon i-left" :class="disableCls">
+            </div>
+            <div class="icon i-right" :class="disableCls">
+            </div>
+            <div class="icon i-right" @click="gotoChapterList">
+              <i class="icon-chapter"></i>
+            </div>
+          </div>
+
+          <div class="progress-wrapper">
+            <span class="time time-l">
+              {{currentTimeStr}}
+            </span>
+            <!--播放进度条-->
+            <div class="progress-bar-wrapper">
+              <progress-bar :percent="percent" @percentChange="onProgressBarChange"></progress-bar>
+            </div>
+            <span class="time time-r">
+              {{durationStr}}
+            </span>
+          </div>
+
           <div class="p_b_c">
             <img  class="play_icon icon-small-size" src="@/images/playaudio/back15s.png" alt="">
             <img  class="play_icon icon-small-size" src="@/images/playaudio/previous.png" alt="">
@@ -44,7 +68,7 @@
         <!--播放页面小屏 底部-->
     <transition name="mini">
       <div class="mini-player" v-show="!fullScreen" @click="open">
-          <img class="mini-img" alt="" :src="currentBookInfo.Imageurl" :class="cdCss">
+          <img class="mini-img" alt="" :src="currentBookInfo.Imageurl?currentBookInfo.Imageurl:require('../../images/lucency.png')" :class="cdCss">
       </div>
     </transition>
 
@@ -54,6 +78,7 @@
       @error="error"
       @timeupdate="updateTime"
       @ended="ended"
+      @readyState="readyState"
     >
     </audio>
 
@@ -63,12 +88,15 @@
 import { mapGetters, mapActions } from 'vuex'
 import { prefixStyle } from '@/util/dom'
 import animations from 'create-keyframe-animation'
-
+import ProgressBar from './ProgressBar'
+import util from '@/util/util'
 const transform = prefixStyle('transform')
 const transitionDuration = prefixStyle('transitionDuration')
+
 export default {
   data () {
     return {
+      audioPlayer: null,
       songReady: false,
       currentTime: 0,
       duration: 0,
@@ -102,18 +130,31 @@ export default {
     }
   },
   components: {
+    ProgressBar
   },
   // 滑动touch
   created () {
     this.touch = {}
+  },
+  mounted () {
+    this.audioPlayer = this.$refs.audio
   },
   // 填充歌曲信息 控制歌曲播放
   computed: {
     cdCss () {
       return this.playStatus === 1 ? 'image-rotate' : 'image-pause'
     },
+    disableCls () {
+      return this.songReady ? '' : 'disable'
+    },
     percent () {
       return this.currentTime / this.duration
+    },
+    currentTimeStr () {
+      return util.secondToTime(this.currentTime)
+    },
+    durationStr () {
+      return util.secondToTime(this.duration)
     },
     ...mapGetters([
       'fullScreen',
@@ -123,41 +164,52 @@ export default {
   },
   watch: {
     currentBookInfo (newSong, oldSong) {
+      console.log('currentBookInfo')
       this.getSongInfo()
     },
     playStatus (newPlaying) {
-      const audio = this.$refs.audio
-      console.log('watch newPlaying')
-      console.log(newPlaying)
       this.$nextTick(() => {
-        newPlaying ? audio.play() : audio.pause()
+        newPlaying ? this.audioPlayer.play() : this.audioPlayer.pause()
       })
     },
-    fullScreen () {
+    fullScreen (isFull) {
       // this.getgetSongInfo()
-      console.log('fullScreen')
+      if (isFull) {
+        this.$nextTick(() => {
+          console.log(this.audioPlayer)
+          console.log(this.currentUrl)
+
+          if (this.audioPlayer) {
+            console.log('play')
+            this.audioPlayer.play()
+          }
+        })
+      }
     },
     currentIndex (index) {
-      console.log('index' + index)
       this.getSongInfo()
     }
   },
   methods: {
     getSongInfo () {
-      console.log('getSongInfo')
-      console.log(this.currentBookInfo)
       this.$api.bookApi.getAudioUrl(this.currentBookInfo.bookid, this.currentBookInfo.chapterlist[0].cid).then(res => {
         console.log(res)
         this.currentUrl = res.data.data.audiourl
+        this.audioPlayer.play()
       }).catch((e) => {
 
       })
+    },
+    starPlay () {
+      if (this.audioPlayer.oncanplaythrough) {
+
+      }
     },
     cdCls () {},
     // 监听progressBar派发的事件
     onProgressBarChange (percent) {
       const currentTime = this.duration * percent
-      this.$refs.audio.currentTime = currentTime
+      this.audioPlayer.currentTime = currentTime
       if (this.this.playStatus !== 1) {
         this.togglePlaying()
       }
@@ -166,20 +218,8 @@ export default {
       this.currentTime = e.target.currentTime
       this.duration = e.target.duration
     },
-    // 格式化时间
-    format (interval) {
-      interval = interval | 0
-      const minute = interval / 60 | 0
-      const second = this._pad(interval % 60)
-      return `${minute}:${second}`
-    },
-    _pad (num, n = 2) {
-      let len = num.toString().length
-      while (len < n) {
-        num = '0' + num
-        len++
-      }
-      return num
+    readyState (e) {
+      console.log(e)
     },
     // 防止快速点击 产生错误
     ready () {
@@ -245,6 +285,7 @@ export default {
     },
     // 设置playing状态 watch playing的变化 实现播放暂停
     togglePlaying () {
+      console.log(this.songReady)
       if (!this.songReady) {
         return
       }
@@ -328,7 +369,6 @@ export default {
 
     // vue transition 动画钩子
     enter (el, done) {
-      console.log('enter')
       const {x, y, scale} = this._getPosAndScale()
 
       let animation = {
@@ -355,20 +395,16 @@ export default {
       animations.runAnimation(this.$refs.cdWrapper, 'move', done)
     },
     afterEnter () {
-      console.log('afterEnter')
-
       animations.unregisterAnimation('move')
       this.$refs.cdWrapper.style.animation = ''
     },
     leave (el, done) {
-      console.log('leave')
       this.$refs.cdWrapper.style.transition = 'all 0.4s'
       const {x, y, scale} = this._getPosAndScale()
       this.$refs.cdWrapper.style[transform] = `translate3d(${x}px,${y}px,0) scale(${scale})`
       this.$refs.cdWrapper.addEventListener('transitionend', done)
     },
     afterLeave () {
-      console.log('afterLeave')
       this.$refs.cdWrapper.style.transition = ''
       this.$refs.cdWrapper.style[transform] = ''
     },

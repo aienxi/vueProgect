@@ -1,0 +1,251 @@
+.container{
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  .top-color-view{
+    width: 750px;
+    height: 418px;
+    position: absolute;
+    // z-index: 0;
+    background: gray;
+    top: 0;
+    left: 0;
+  }
+  .top-search-view{
+    width: 750px;
+    position: absolute; 
+    z-index: 10;
+    top:0;
+    height:100px;
+    background:rgba(255,255,255,0)
+  }
+  .top-search-view.top{
+    background:rgba(255,255,255,0)
+  }
+  .top-search-view.bottom{
+    background:rgba(255,255,255,1)
+  
+  }
+  .top-search-searchbox {
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 30px;
+    left: 25px;
+    right: 25px;
+    height: 60px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+  } .top-search-searchbox.top{
+    background-color: rgba(255,255,255,0.1);
+  } .top-search-searchbox.bottom{
+    background-color: rgba(0,0,0,0.1);
+  
+  } .search-title.top{
+    color:#FFFFFF;
+  
+  }
+   .search-title.bottom{
+    color:#333333;
+  
+  }
+  .search-icon-img{
+    width: 28px;
+    height: 28px;
+    margin-left: 30px;
+  
+  }
+  .search-title{
+    margin-left: 30px;
+    font-size:26px;
+    color:rgba(255,255,255,1);
+  
+  }
+  .nav-place-view{
+    width: 750px;
+    height: 112px;
+    position: relative;
+  }
+  .top-white-color-view{
+    position: absolute;
+    // z-index: 0;
+    background: #FFFFFF;
+    border-radius: 25px 25px 0 0;
+    width: 750px;
+    height: 300px;
+    top:253px;
+  }
+  .swipe{
+   width: 100%;
+   height: 300px;
+   position: relative;
+   top:0;
+  }
+  .banner-image{
+    margin-left: 25px;
+    width: 700px;
+    height: 300px;
+    border-radius: 25px;
+  
+  }
+  .cfylist{
+      position: relative;
+      background: white;
+      top: 0;
+  }
+  .class-swiper{
+    height: 270px;
+    width: 750px;
+  }
+  .cfylist-item{
+    height: 270px;
+    width: 750px;
+  }
+  .class-swiper-item-base{
+    margin-left: 25px;
+    width: 701px;
+  }
+  .cfyicon{
+      width:140px;
+      float:left;
+      margin-top: 20px;
+      margin-left: 0;
+      margin-right: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  .cfyicon-image{
+      height:76px;
+      width: 76px;
+  }
+  .cfyicon-name{
+    font-weight:500;
+    font-size:24px;
+    color: #333333;
+    margin-top: 15px;
+    height: 24px;
+    line-height: 24px;
+  }
+  .dots {
+      position: relative;
+      background: #ffffff;
+      top: 0;
+      left: 0;
+      width: 750px;
+      height: 40px;
+  }
+  .dots .base{
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    height: 6px;
+    border-radius: 3px;
+    align-items: center;
+    width: auto;
+  }
+  .dot{
+    margin-top: 17px;
+    width: 30px;
+    height: 6px;
+    background-color: #EEEEEE;
+    border-radius: 3px;
+  
+  }
+  .dot.active {
+    height: 6px;
+    background: #EC1C26;
+  }
+  .cut-view{
+    width:100%;
+    height:15px;
+    background-color:#efeff5;
+  }
+  .book-card-view{
+    margin-left: 25px;
+    width: 700px;
+    border-radius: 25px;
+    box-shadow:0px 0px 27px 0px rgba(0, 0, 0, 0.03);
+    background-color:#ffffff;
+  
+  }
+  
+  .cfytitle{
+    float: left;
+    font-size: 32px;
+    margin-left: 30px;
+    margin-top: 29px;
+  }
+  
+  .classfy{
+      width:100%;
+      height:90px;
+      margin:23px 0 0 0;
+  }
+  .more-view{
+      float: right;
+      font-size: 26px;
+      display: flex;
+      flex-direction: row;
+      margin-top: 0;
+      align-items: center;
+      height: 90px;
+      width: 350px;
+      justify-content: flex-end;
+  }
+  .morecfy{
+      margin-right: 10px;
+      font-size: 26px;
+  
+  }
+  .more-image{
+    width:12px;
+    height:22px;
+    margin-right: 30px;
+  }
+  .booklist{
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      margin-left: 18px;
+      margin-right: 18px;
+  }
+  .book-item{
+      width:166px;
+  
+  }
+  .boolk-detail{
+      position:relative;
+      width:166px;
+  }
+  .item-cover{
+      height:200px;
+      width: 142px;
+      // z-index: 50;
+      margin-left: 12px;
+  }
+  .item-name{
+    text-align: center;
+    font-size: 26px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+  .isfine-image{
+    width: 60px;
+    height: 60px;
+    position:absolute;
+    top: 0;
+    left: 12px;
+    z-index: 9;
+  }
+  

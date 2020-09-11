@@ -36,6 +36,7 @@
 import BScroll from 'better-scroll'
 
 export default {
+  name: 'mys',
   data () {
     return {
       historyList: []
