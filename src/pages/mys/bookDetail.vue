@@ -103,7 +103,7 @@
               <div class="chapter-wrapper">
                 <div class="chapter-wrapper-div">
                   <div  v-for="(item , index) in chapterList"  :key="index" >
-                    <div :id="item.cid" >
+                    <div :id="item.cid"  @click="clickIndx(index)">
                       <div class="chapter-base">
                         <div :id="'ctitle' + item.cid" class="chapter-title" >{{item.title}}</div>
                         <div class="capter-info">
@@ -220,9 +220,13 @@ export default {
     ...mapGetters(['fullScreen'])
   },
   methods: {
-    ...mapActions(['setFullScreen', 'setCurrentBookInfo']),
+    ...mapActions([
+      'setFullScreen',
+      'setCurrentBookInfo'
+    ]),
     showPlayer (index) {
       this.setFullScreen(true)
+      this.bookInfo.currentIndex = index
       this.setCurrentBookInfo(this.bookInfo)
     },
     clickSegmentButton (index) {
@@ -235,6 +239,9 @@ export default {
     },
     continuePlay () {
       this.showPlayer()
+    },
+    clickIndx (index) {
+      this.showPlayer(index)
     },
     touchstart (e) {
       var touch = e.touches[0]

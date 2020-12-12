@@ -8,7 +8,6 @@
             <router-view  :class="viewTransition"/>
           </keep-alive>
         </transition>
-
     </keep-alive>
     <tabbar v-show="showTabbar"></tabbar>
     <audioPlayer></audioPlayer>

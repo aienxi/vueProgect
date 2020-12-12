@@ -1,6 +1,6 @@
 import base from './base'
-import networkEngine from '@/util/networkEngine'
-import userInfoEngine from '@/util/userInfoEngine'
+import networkEngine from '@/util/network-engine'
+import userInfoEngine from '@/util/user-engine'
 import util from '@/util/util'
 import md5 from '@/util/md5'
 

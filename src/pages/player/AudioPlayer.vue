@@ -90,6 +90,7 @@ import { prefixStyle } from '@/util/dom'
 import animations from 'create-keyframe-animation'
 import ProgressBar from './ProgressBar'
 import util from '@/util/util'
+import bookEngine from '@/util/book-engine'
 const transform = prefixStyle('transform')
 const transitionDuration = prefixStyle('transitionDuration')
 
@@ -106,7 +107,6 @@ export default {
       chapterList: [],
       currentUrl: '',
       showAlert: false,
-      currentSong: {},
       alertMenus: [{
         label: '0.75倍',
         type: 'default'
@@ -135,6 +135,11 @@ export default {
   // 滑动touch
   created () {
     this.touch = {}
+    var bookInfo = bookEngine.getPlayRecord()
+    if (bookInfo) {
+      this.setCurrentBookInfo(bookInfo)
+    }
+    console.log(this.currentBookInfo)
   },
   mounted () {
     this.audioPlayer = this.$refs.audio
@@ -164,7 +169,7 @@ export default {
   },
   watch: {
     currentBookInfo (newSong, oldSong) {
-      console.log('currentBookInfo')
+      bookEngine.addHistoryBook(this.currentBookInfo)
       this.getSongInfo()
     },
     playStatus (newPlaying) {
@@ -173,14 +178,9 @@ export default {
       })
     },
     fullScreen (isFull) {
-      // this.getgetSongInfo()
       if (isFull) {
         this.$nextTick(() => {
-          console.log(this.audioPlayer)
-          console.log(this.currentUrl)
-
           if (this.audioPlayer) {
-            console.log('play')
             this.audioPlayer.play()
           }
         })
@@ -192,7 +192,10 @@ export default {
   },
   methods: {
     getSongInfo () {
-      this.$api.bookApi.getAudioUrl(this.currentBookInfo.bookid, this.currentBookInfo.chapterlist[0].cid).then(res => {
+      if (!this.currentBookInfo.currentIndex || this.currentBookInfo.currentIndex < 0 || this.currentBookInfo.currentIndex >= this.currentBookInfo.chapterlist.lenngth) {
+        this.currentBookInfo.currentIndex = 0
+      }
+      this.$api.bookApi.getAudioUrl(this.currentBookInfo.bookid, this.currentBookInfo.chapterlist[this.currentBookInfo.currentIndex].cid).then(res => {
         console.log(res)
         this.currentUrl = res.data.data.audiourl
         this.audioPlayer.play()
@@ -202,7 +205,7 @@ export default {
     },
     starPlay () {
       if (this.audioPlayer.oncanplaythrough) {
-
+        this.audioPlayer.play()
       }
     },
     cdCls () {},
@@ -217,6 +220,13 @@ export default {
     updateTime (e) {
       this.currentTime = e.target.currentTime
       this.duration = e.target.duration
+      var positionInfo = {
+        bookInfo: this.currentBookInfo.bookid,
+        playIndex: this.playIndex,
+        currentTime: this.currentTime,
+        duration: this.duration
+      }
+      bookEngine.setPlayRecord(positionInfo)
     },
     readyState (e) {
       console.log(e)
@@ -225,7 +235,6 @@ export default {
     ready () {
       console.log('ready')
       this.songReady = true
-      // this.savePlayHistory(this.currentSong)
     },
     error () {
       this.songReady = true

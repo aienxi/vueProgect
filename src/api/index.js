@@ -1,7 +1,7 @@
-import homeApi from '@/api/homeApi'
-import mysApi from '@/api/mysApi'
-import recommendApi from '@/api/recommendApi'
-import bookApi from '@/api/bookApi'
+import homeApi from '@/api/home-api'
+import mysApi from '@/api/mys-api'
+import recommendApi from '@/api/recommend-api'
+import bookApi from '@/api/book-api'
 
 export default {
   homeApi,
